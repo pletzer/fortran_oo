@@ -1,5 +1,7 @@
 module list_mod
 
+  use iso_c_binding 
+
   implicit none
 
   type list
@@ -11,19 +13,21 @@ module list_mod
 
   contains
 
-  subroutine list_newitem(this, id)
+  subroutine list_newitem(this, element, id)
     type(list), pointer :: this
+    integer, target     :: element
     integer, intent(in) :: id
     allocate(this)
     this%first => this
     this%next => null()
     this%id = id
-    this%datum => null()
+    this%datum => element
   end subroutine list_newitem
 
-  subroutine list_new(this)
+  subroutine list_new(this, element)
     type(list), pointer :: this
-    call list_newitem(this, 0)
+    integer, target     :: element
+    call list_newitem(this, element, 0)
   end subroutine list_new
 
   subroutine list_del(this)
@@ -49,10 +53,19 @@ module list_mod
     do while (associated(this%next))
       call list_next(this)
     enddo
-    call list_newitem(newnode, this%id + 1)
-    newnode%datum => element
+    call list_newitem(newnode, element, this%id + 1)
     this%next => newnode
     newnode%first => this%first
   end subroutine list_add
+
+  subroutine list_print(this)
+    type(list), pointer :: this
+    call list_begin(this)
+    do while (associated(this%next))
+      print *,'id: ', this%id, ' datum: ', this%datum, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+      call list_next(this)
+    enddo
+    print *,'id: ', this%id, ' datum: ', this%datum, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+  end subroutine list_print
 
 end module list_mod
