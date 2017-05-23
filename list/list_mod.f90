@@ -31,4 +31,28 @@ module list_mod
     deallocate(this)
   end subroutine list_del
 
+  subroutine list_begin(this)
+    type(list), pointer :: this
+    this => this%first
+  end subroutine list_begin
+
+  subroutine list_next(this)
+    type(list), pointer :: this
+    if (associated(this%next)) then
+      this => this%next
+    endif
+  end subroutine list_next
+
+  subroutine list_add(this, element)
+    type(list), pointer :: this
+    integer, pointer    :: element
+    type(list), pointer :: newnode
+    do while (.not. associated(this%next))
+      call list_next(this)
+    enddo
+    call list_newitem(newnode, this%id + 1)
+    this%next => newnode
+    newnode%first => this%first
+  end subroutine list_add
+
 end module list_mod
