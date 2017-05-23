@@ -38,19 +38,19 @@ module list_mod
 
   subroutine list_next(this)
     type(list), pointer :: this
-    if (associated(this%next)) then
-      this => this%next
-    endif
+    this => this%next
   end subroutine list_next
 
   subroutine list_add(this, element)
     type(list), pointer :: this
-    integer, pointer    :: element
+    integer, target    :: element
     type(list), pointer :: newnode
-    do while (.not. associated(this%next))
+    call list_begin(this)
+    do while (associated(this%next))
       call list_next(this)
     enddo
     call list_newitem(newnode, this%id + 1)
+    newnode%datum => element
     this%next => newnode
     newnode%first => this%first
   end subroutine list_add
