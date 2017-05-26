@@ -19,6 +19,12 @@ make
 ctest
 ```
 
+On AIX:
+
+```bash
+FC=xlf2003_r cmake ..
+```
+
 ## Fortran support by compilers
 
 | Compiler       | list  | list_poly |
