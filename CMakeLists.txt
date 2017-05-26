@@ -14,4 +14,5 @@ cmake_minimum_required(VERSION 2.8.8)
 enable_testing()
 
 add_subdirectory(list)
+add_subdirectory(list_poly)
 
