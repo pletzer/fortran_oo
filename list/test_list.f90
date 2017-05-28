@@ -1,4 +1,5 @@
 program test_list
+  ! Shows how to create a linked list in Fortran 95
   use list_mod
   implicit none
   type(list), pointer :: lst

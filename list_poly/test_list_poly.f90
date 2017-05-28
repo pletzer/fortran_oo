@@ -1,4 +1,6 @@
 program test_list
+  ! Shows how to create a linked list using variable type 
+  ! (unlimited polymorphic) object
   use list_poly_mod
   implicit none
   type(list), pointer :: lst
