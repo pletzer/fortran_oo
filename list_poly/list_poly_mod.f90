@@ -36,7 +36,7 @@ module list_poly_mod
       type is (complex)
         print *,'[complex]   id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
       class default
-        print *, "list_print: unsupported type"
+        print *, "list_printtype: unsupported type"
     end select
   end subroutine list_printtype
 
