@@ -24,6 +24,22 @@ module list_poly_mod
     this%datum => element
   end subroutine list_newitem
 
+  subroutine list_printtype(this)
+    type(list), pointer :: this
+      select type (val => this%datum)
+      type is (integer)
+        print *,'[integer]   id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+      type is (real)
+        print *,'[real]      id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+      type is (character(*))
+        print *,'[character] id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+      type is (complex)
+        print *,'[complex]   id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+      class default
+        print *, "list_print: unsupported type"
+    end select
+  end subroutine list_printtype
+
   subroutine list_new(this, element)
     ! Constructor
     type(list), pointer :: this
@@ -84,32 +100,10 @@ module list_poly_mod
 
     call list_begin(this)
     do while (associated(this%next))
-      select type (val => this%datum)
-      type is (integer)
-        print *,'id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
-      type is (real)
-        print *,'id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
-      type is (character(*))
-        print *,'id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
-      type is (complex)
-        print *,'id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
-      class default
-        print *, "list_print: unsupported type"
-      end select
+      call list_printtype(this)
       call list_next(this)
     enddo
-    select type (val => this%datum)
-    type is (integer)
-      print *,'id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
-    type is (real)
-      print *,'id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
-    type is (character(*))
-      print *,'id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
-    type is (complex)
-      print *,'id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
-    class default
-      print *, "list_print: unsupported type"
-    end select
+    call list_printtype(this)
   end subroutine list_print
 
 end module list_poly_mod
