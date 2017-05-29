@@ -27,6 +27,7 @@ FC=xlf2003_r cmake ..
 
 ## Fortran support by compilers
 
-| Compiler       | list  | list_poly |
-|----------------|-------|-----------|
-| gfortran 4.8.5 | yes   | yes       |
+| Compiler            | list  | list_poly |
+|---------------------|-------|-----------|
+| gfortran 4.8.5      | yes   | yes       |
+| xlf2003_r 14.1.0.12 | yes   | yes       |
