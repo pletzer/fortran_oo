@@ -76,7 +76,7 @@ CONTAINS
         ! "data"
         SELECT TYPE (output => data)
         TYPE IS (REAL)
-            WRITE(this%fileunit, '(E12.6)') output
+            WRITE(this%fileunit, '(E12.5)') output
         TYPE IS (INTEGER)
             WRITE(this%fileunit, '(I6)') output
         TYPE IS (CHARACTER(*))
