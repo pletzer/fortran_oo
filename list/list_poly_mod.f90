@@ -1,7 +1,5 @@
 module list_poly_mod
 
-  use iso_c_binding 
-
   implicit none
 
   type list
@@ -28,13 +26,13 @@ module list_poly_mod
     type(list), pointer :: this
       select type (val => this%datum)
       type is (integer)
-        print *,'[integer]   id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+        print *,'[integer]   id: ', this%id, ' datum: ', val
       type is (real)
-        print *,'[real]      id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+        print *,'[real]      id: ', this%id, ' datum: ', val
       type is (character(*))
-        print *,'[character] id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+        print *,'[character] id: ', this%id, ' datum: ', val
       type is (complex)
-        print *,'[complex]   id: ', this%id, ' datum: ', val, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+        print *,'[complex]   id: ', this%id, ' datum: ', val
       class default
         print *, "list_printtype: unsupported type"
     end select
