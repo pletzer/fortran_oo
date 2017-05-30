@@ -33,10 +33,10 @@ FC=ifort cmake ..
 
 ## Fortran support by compilers
 
-c: compiles
-C: DOES NOT COMPILE
-r: runs
-R: DOES NOT RUN
+  c: compiles
+  C: DOES NOT COMPILE
+  r: runs
+  R: DOES NOT RUN
 
 | Compiler            | list  | list_poly | file_object |
 |---------------------|-------|-----------|--------------
