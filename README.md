@@ -37,7 +37,7 @@ FC=ifort cmake ..
 
   C: DOES NOT COMPILE
 
-  r: runsa
+  r: runs
 
   R: DOES NOT RUN
 
