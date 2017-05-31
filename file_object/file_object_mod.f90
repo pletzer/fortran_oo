@@ -4,7 +4,7 @@ MODULE file_object_mod
 
     ! Define "file" object with properties and
     ! methods ("type-bound procedures"). Also
-    ! Includes a deconstructor ("final subroutine")
+    ! includes a destructor ("final subroutine")
     TYPE :: file
         character(len=:), ALLOCATABLE :: filename
         integer :: fileunit
@@ -22,12 +22,11 @@ MODULE file_object_mod
 
     ! Specialise object to include a separator
     TYPE, EXTENDS(file) :: file_withseparator
-        ! Use a simple constant for simplicity,
-        ! we would need to override constructor
-        ! and deconstructor otherwise
+        ! Use a constant for simplicity
         CHARACTER(len=5) :: separator = '+++++'
     CONTAINS
         PROCEDURE :: write => file_withseparator_write
+        FINAL :: file_withseparator_close
     END TYPE file_withseparator
 
     INTERFACE file_withseparator
@@ -69,7 +68,7 @@ CONTAINS
         ! Must be polymorphic
         CLASS(file), INTENT(in) :: this
         ! "Unlimited" polymorphic argument
-        CLASS(*) :: data
+        CLASS(*), INTENT(in) :: data
 
         ! Distinguish different data types and set
         ! pointer "output" to polymorphic variable
@@ -93,7 +92,7 @@ CONTAINS
         ! Must be polymorphic
         CLASS(file_withseparator), INTENT(in) :: this
         ! "Unlimited" polymorphic argument
-        CLASS(*) :: data
+        CLASS(*), INTENT(in) :: data
 
         ! Write separator and reuse subroutine from
         ! base class
@@ -105,16 +104,36 @@ CONTAINS
     ! Deconstructor for cleaning up
     SUBROUTINE file_close(this)
         IMPLICIT NONE
-        TYPE(file) :: this
-        
-        ! Write a message to prove that the deconstructor
-        ! is actually called
-        PRINT '(A,X,A)', 'file_close: closing file', this%filename
+        TYPE(file), INTENT(INOUT) :: this
+        LOGICAL :: opened
 
-        ! Clean up
-        CLOSE(this%fileunit)
-        DEALLOCATE(this%filename)
+        INQUIRE(unit=this%fileunit, OPENED=opened)
+        IF (opened) THEN
+            PRINT '(A,X,A)', 'file_close: closing file', this%filename
+            CLOSE(this%fileunit)
+        END IF
+        IF (ALLOCATED(this%filename)) THEN
+            PRINT '(A,X,A)', 'file_close: deallocating this%filename'
+            DEALLOCATE(this%filename)
+        END IF
 
     END SUBROUTINE file_close
+
+    SUBROUTINE file_withseparator_close(this)
+        IMPLICIT NONE
+        TYPE(file_withseparator), INTENT(INOUT) :: this
+        LOGICAL :: opened
+
+        INQUIRE(unit=this%fileunit, OPENED=opened)
+        IF (opened) THEN
+            PRINT '(A,X,A)', 'file_withseparator_close: closing file', this%filename
+            CLOSE(this%fileunit)
+        END IF
+        IF (ALLOCATED(this%filename)) THEN
+            PRINT '(A,X,A)', 'file_with_separator_close: deallocating this%filename'
+            DEALLOCATE(this%filename)
+        END IF
+
+    END SUBROUTINE file_withseparator_close
 
 END MODULE file_object_mod
