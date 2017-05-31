@@ -1,7 +1,5 @@
 module list_mod
 
-  use iso_c_binding 
-
   implicit none
 
   type list
@@ -84,10 +82,10 @@ module list_mod
 
     call list_begin(this)
     do while (associated(this%next))
-      print *,'id: ', this%id, ' datum: ', this%datum, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+      print *,'id: ', this%id, ' datum: ', this%datum
       call list_next(this)
     enddo
-    print *,'id: ', this%id, ' datum: ', this%datum, ' first: ', c_loc(this%first), ' next: ', c_loc(this%next)
+    print *,'id: ', this%id, ' datum: ', this%datum
   end subroutine list_print
 
 end module list_mod

@@ -25,8 +25,26 @@ On AIX:
 FC=xlf2003_r cmake ..
 ```
 
+Using the Intel compiler:
+
+```bash
+FC=ifort cmake ..
+```
+
 ## Fortran support by compilers
 
-| Compiler       | list  | list_poly |
-|----------------|-------|-----------|
-| gfortran 4.8.5 | yes   | yes       |
+  c: compiles
+
+  C: DOES NOT COMPILE
+
+  r: runs
+
+  R: DOES NOT RUN
+
+| Compiler            | list  | list_poly | file_object |
+|---------------------|-------|-----------|--------------
+| gfortran 4.8.5      | c,r   | c,r       |  C,R        |
+| xlf2003_r 14.1.0.12 | c,r   | c,r       |             |
+| gfortran 6.3        | c,r   | c,r       |  c,R        |
+| Intel 2017a         | c,r   | c,r       |  c,R        |
+
