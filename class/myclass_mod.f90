@@ -8,6 +8,11 @@ module myclass_mod
             procedure :: set => myclass_set
     end type myclass_type
 
+    ! constructor
+    interface myclass_type
+        module procedure myclass_new
+    end interface
+
 contains
 
     function myclass_new(n) result(this)
