@@ -4,19 +4,18 @@ module myclass_mod
     type myclass_type
         integer, allocatable :: arr(:)
         contains
-            procedure :: new => myclass_new
             procedure :: del => myclass_del
             procedure :: set => myclass_set
     end type myclass_type
 
 contains
 
-    subroutine myclass_new(this, n)
+    function myclass_new(n) result(this)
         implicit none
-        class(myclass_type), intent(inout)  :: this
+        type(myclass_type)                  :: this
         integer, intent(in)                 :: n
         allocate(this%arr(n))
-    end subroutine myclass_new
+    end function myclass_new
 
     subroutine myclass_set(this, vals)
         implicit none
