@@ -2,10 +2,13 @@ module myclass_mod
 
     implicit none
     type myclass_type
+    private
+        ! members
         integer, allocatable :: arr(:)
         contains
-            procedure :: del => myclass_del
-            procedure :: set => myclass_set
+        ! methods
+        procedure :: set => myclass_set    
+        final :: myclass_del
     end type myclass_type
 
     ! constructor
@@ -20,6 +23,7 @@ contains
         type(myclass_type)                  :: this
         integer, intent(in)                 :: n
         allocate(this%arr(n))
+        print *, 'constructor was called'
     end function myclass_new
 
     subroutine myclass_set(this, vals)
@@ -27,12 +31,14 @@ contains
         class(myclass_type), intent(inout) :: this
         integer                            :: vals(:)
         this%arr = vals
+        print *, 'set method was called'
     end subroutine myclass_set
 
     subroutine myclass_del(this)
         implicit none
-        class(myclass_type), intent(inout) :: this
+        type(myclass_type), intent(inout)  :: this
         deallocate(this%arr)
+        print *, 'destructor was called'
     end subroutine myclass_del
 
 end module myclass_mod
