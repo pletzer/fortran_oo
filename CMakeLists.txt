@@ -15,4 +15,5 @@ enable_testing()
 
 add_subdirectory(list)
 add_subdirectory(file_object)
+add_subdirectory(class)
 
