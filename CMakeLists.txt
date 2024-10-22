@@ -9,10 +9,11 @@ project(fortran_oo)
 enable_language(Fortran)
 
 # Required version
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.2)
 
 enable_testing()
 
+add_subdirectory(private)
 add_subdirectory(list)
 add_subdirectory(file_object)
 add_subdirectory(class)
