@@ -16,6 +16,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Download Dockerfile
+      run: curl -o Dockerfile https://raw.githubusercontent.com/docker-library/gcc/master/Dockerfile
+
+    - name: List files for debugging
+      run: ls -al
+
+
     # - name: Set up Docker Buildx
     #   uses: docker/setup-buildx-action@v4
 
@@ -38,3 +45,5 @@ jobs:
 
     - name: Run Docker container
       run: docker run my-app:latest
+
+    
