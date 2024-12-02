@@ -13,6 +13,7 @@ cmake_minimum_required(VERSION 3.2)
 
 enable_testing()
 
+add_subdirectory(final)
 add_subdirectory(private)
 add_subdirectory(list)
 add_subdirectory(file_object)
