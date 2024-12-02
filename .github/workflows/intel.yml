@@ -25,7 +25,7 @@ jobs:
 
     - name: Install Intel oneAPI compilers
       run: |
-        sudo apt install -y intel-oneapi-compiler-dpcpp-cpp intel-oneapi-compiler-dpcpp-cpp-and-c intel-oneapi-mkl-devel
+        sudo apt install -y intel-oneapi-compiler-dpcpp-cpp
 
     - name: Source Intel oneAPI environment
       run: source /opt/intel/oneapi/setvars.sh
