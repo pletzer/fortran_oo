@@ -30,13 +30,6 @@ jobs:
     - name: Source Intel oneAPI environment
       run: source /opt/intel/oneapi/setvars.sh
 
-    - name: Compile with ifort
-      run: |
-        source /opt/intel/oneapi/setvars.sh
-        FC=ifort cmake .
-        make 
-        ctest
-
     - name: Compile with ifx
       run: |
         source /opt/intel/oneapi/setvars.sh
