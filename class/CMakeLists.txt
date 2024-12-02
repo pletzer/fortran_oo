@@ -18,6 +18,8 @@ target_link_libraries(test_myclass f_oo_myclass)
 add_test(NAME test_myclass
          COMMAND test_myclass)
 set_tests_properties(test_myclass PROPERTIES
+                     PASS_REGULAR_EXPRESSION "constructor was called"
+                     PASS_REGULAR_EXPRESSION "set method was called"
                      PASS_REGULAR_EXPRESSION "destructor was called")
 
 
