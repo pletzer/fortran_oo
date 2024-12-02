@@ -3,6 +3,7 @@
 Testing object oriented programming features in Fortran.
 
 ![GCC tests](https://github.com/pletzer/fortran_oo/actions/workflows/gnu.yml/badge.svg)
+![Intel tests](https://github.com/pletzer/fortran_oo/actions/workflows/intel.yml/badge.svg)
 
 ## How to check out the code
 
