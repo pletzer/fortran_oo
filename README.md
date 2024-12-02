@@ -2,7 +2,8 @@
 
 Testing object oriented programming features in Fortran.
 
-[Testing GNU compiler](https://github.com/pletzer/fortran_oo/actions/workflows/gnu.yml/badge.svg)
+GCC test results:
+https://github.com/pletzer/fortran_oo/actions/workflows/gnu.yml/badge.svg
 
 ## How to check out the code
 
