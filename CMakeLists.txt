@@ -4,12 +4,11 @@
 #
 ###################################################
 
+cmake_minimum_required(VERSION 3.2)
+
 # Project information
 project(fortran_oo)
 enable_language(Fortran)
-
-# Required version
-cmake_minimum_required(VERSION 3.2)
 
 enable_testing()
 
