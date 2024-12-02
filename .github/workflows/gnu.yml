@@ -11,39 +11,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
+    name: Build
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
 
-    - name: Download Dockerfile
-      run: curl -o Dockerfile https://raw.githubusercontent.com/docker-library/gcc/master/Dockerfile
+      - name: Install Dependencies
+        run: |
+          sudo apt update -y
+          sudo apt install -y build-essential
+          sudo apt install -y cmake
 
-    - name: List files for debugging
-      run: ls -al
+      - uses: actions/checkout@v4
 
-
-    # - name: Set up Docker Buildx
-    #   uses: docker/setup-buildx-action@v4
-
-    # - name: Cache Docker layers
-    #   uses: actions/cache@v2
-    #   with:
-    #     path: /tmp/.buildx-cache
-    #     key: ${{ runner.os }}-buildx-${{ github.sha }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-buildx-
-
-    # - name: Log in to Docker Hub
-    #   uses: docker/login-action@v2
-    #   with:
-    #     username: ${{ secrets.DOCKER_USERNAME }}
-    #     password: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build Docker image
-      run: docker build --tag my-app:latest .
-
-    - name: Run Docker container
-      run: docker run my-app:latest
-
-    
+      - name: Download Build and Test
+        run: |
+          ls
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ctest
