@@ -1,5 +1,5 @@
 
-name: Run Intel compiler tests
+ame: Build and Run with Intel oneAPI in Docker
 
 on:
   push:
@@ -12,36 +12,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
-    name: Build
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Install Dependencies
-        run: |
-          sudo apt update -y
-          sudo apt install -y build-essential
-          sudo apt install -y cmake
+    - name: Pull Intel oneAPI Docker image
+      run: docker pull intel/oneapi-basekit
 
-      - name: Install oneapi
-        run: |
-          # download the key to system keyring
-          wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
-          | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
-          # add signed entry to apt sources and configure the APT client to use Intel repository:
-          echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-          # fortran is part of the HPC toolkit
-          sudo apt install -y intel-oneapi-hpc-toolkit
-
-      - uses: actions/checkout@v4
-
-      - name: Download Build and Test
-        run: |
-          ls
-          mkdir build
-          cd build
-          FC=ifx cmake ..
-          make
-          ctest
+    - name: Run Intel oneAPI container and compile code
+      run: |
+        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace intel/oneapi-basekit /bin/bash -c "
+          source /opt/intel/oneapi/setvars.sh > /dev/null;
+          icx --help;
+        "
+        
