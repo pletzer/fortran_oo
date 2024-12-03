@@ -12,6 +12,7 @@ enable_language(Fortran)
 
 enable_testing()
 
+add_subdirectory(polymorphism)
 add_subdirectory(inheritance)
 add_subdirectory(final)
 add_subdirectory(private)

@@ -1,5 +1,5 @@
 
-name: Build and Run with Intel oneAPI in Docker
+name: Run ifx in Docker tests
 
 on:
   push:

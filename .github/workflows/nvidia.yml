@@ -1,5 +1,5 @@
 
-name: Setup CMake and NVFortran
+name: Run nvfortran tests
 
 on:
   push:

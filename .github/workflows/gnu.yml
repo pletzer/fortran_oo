@@ -1,4 +1,4 @@
-name: Run GNU compiler tests
+name: Run gfortran tests
 
 on:
   push:
