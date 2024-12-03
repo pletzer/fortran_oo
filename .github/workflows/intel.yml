@@ -1,5 +1,5 @@
 
-ame: Build and Run with Intel oneAPI in Docker
+name: Build and Run with Intel oneAPI in Docker
 
 on:
   push:
