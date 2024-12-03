@@ -1,4 +1,5 @@
-name: Build and Run with Intel oneAPI in Docker
+
+name: Check Intel oneAPI Compilers
 
 on:
   push:
@@ -16,18 +17,36 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Pull Intel oneAPI Docker image
-      run: docker pull intel/oneapi-basekit
+    - name: Cache Docker layers
+      uses: actions/cache@v3
+      with:
+        path: /tmp/.docker-cache
+        key: ${{ runner.os }}-docker-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-docker-
 
-    - name: Run Intel oneAPI container and compile code
+    - name: Install CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Pull Intel oneAPI Docker image
+      run: |
+        mkdir -p /tmp/.docker-cache
+        docker load -i /tmp/.docker-cache/intel-oneapi-basekit.tar || true
+        docker pull intel/oneapi-basekit
+        docker save intel/oneapi-basekit -o /tmp/.docker-cache/intel-oneapi-basekit.tar
+
+    - name: Run Intel oneAPI container and check compilers
       run: |
         docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace intel/oneapi-basekit /bin/bash -c "
-          source /opt/intel/oneapi/setvars.sh  > /dev/null;
+          source /opt/intel/oneapi/setvars.sh > /dev/null;
           export CC=icx;
           export CXX=icpx;
           export FC=ifort;
           ifort --version;
+          ifx --version
         "
+
+
 
 
 
