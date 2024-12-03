@@ -37,7 +37,9 @@ contains
     subroutine myclass_del(this)
         implicit none
         type(myclass_type), intent(inout)  :: this
-        deallocate(this%arr)
+        integer :: ier
+        ! some compilers have already deallocated this%arr
+        deallocate(this%arr, stat=ier)
         print *, 'destructor was called'
     end subroutine myclass_del
 
