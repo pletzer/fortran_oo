@@ -12,6 +12,7 @@ enable_language(Fortran)
 
 enable_testing()
 
+add_subdirectory(specific_type_bound)
 add_subdirectory(select_type)
 add_subdirectory(associate)
 add_subdirectory(unlimited_poly)
