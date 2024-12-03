@@ -33,6 +33,8 @@ jobs:
     - name: Compile with ifx
       run: |
         source /opt/intel/oneapi/setvars.sh
+        which ifort
+        which ifx
         FC=ifx cmake .
         make 
         ctest
