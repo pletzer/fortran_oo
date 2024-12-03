@@ -1,4 +1,4 @@
-name: Build and Run with Intel OneAPI
+name: Build and Run with Intel oneAPI in Docker
 
 on:
   push:
@@ -16,23 +16,53 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Add Intel oneAPI repository
-      run: |
-        wget -qO- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | sudo apt-key add -
-        sudo add-apt-repository "deb https://apt.repos.intel.com/oneapi all main"
-        sudo apt update
-        sudo apt install -y cmake
+    - name: Pull Intel oneAPI Docker image
+      run: docker pull intel/oneapi-basekit
 
-    - name: Install Intel oneAPI compilers
+    - name: Run Intel oneAPI container and compile code
       run: |
-        sudo apt install -y intel-oneapi-compiler-dpcpp-cpp
+        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace intel/oneapi-basekit /bin/bash -c "
+          source /opt/intel/oneapi/setvars.sh;
+          FC=ifort cmake .;
+        "
 
-    - name: Source Intel oneAPI environment
-      run: source /opt/intel/oneapi/setvars.sh
 
-    - name: Compile
-      run: |
-        source /opt/intel/oneapi/setvars.sh
-        FC=ifort cmake .
-        make 
-        ctest
+
+# name: Build and Run with Intel OneAPI
+
+# on:
+#   push:
+#     branches:
+#       - master
+#   pull_request:
+#     branches:
+#       - master
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+
+#     - name: Add Intel oneAPI repository
+#       run: |
+#         wget -qO- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | sudo apt-key add -
+#         sudo add-apt-repository "deb https://apt.repos.intel.com/oneapi all main"
+#         sudo apt update
+#         sudo apt install -y cmake
+
+#     - name: Install Intel oneAPI compilers
+#       run: |
+#         sudo apt install -y intel-oneapi-compiler-dpcpp-cpp
+
+#     - name: Source Intel oneAPI environment
+#       run: source /opt/intel/oneapi/setvars.sh
+
+#     - name: Compile
+#       run: |
+#         source /opt/intel/oneapi/setvars.sh
+#         FC=ifort cmake .
+#         make 
+#         ctest
