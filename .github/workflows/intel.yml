@@ -18,12 +18,12 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Pull Intel oneAPI Docker image
-      run: docker pull intel/oneapi-basekit
+      run: docker pull intel/oneapi-hpckit
 
     - name: Run Intel oneAPI container and compile code
       run: |
         docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace intel/oneapi-basekit /bin/bash -c "
           source /opt/intel/oneapi/setvars.sh > /dev/null;
-          icx --help;
+          ifx --help;
         "
         
