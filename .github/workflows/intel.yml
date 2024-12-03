@@ -22,8 +22,11 @@ jobs:
     - name: Run Intel oneAPI container and compile code
       run: |
         docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace intel/oneapi-basekit /bin/bash -c "
-          source /opt/intel/oneapi/setvars.sh;
-          FC=ifort cmake .;
+          source /opt/intel/oneapi/setvars.sh  > /dev/null;
+          export CC=icx;
+          export CXX=icpx;
+          export FC=ifort;
+          ifort --version;
         "
 
 
