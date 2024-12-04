@@ -1,6 +1,10 @@
 module myclass_mod
 
+
     implicit none
+
+    integer :: ref_count = 0
+
     type myclass_type
     private
         ! members
@@ -23,7 +27,8 @@ contains
         type(myclass_type)                  :: this
         integer, intent(in)                 :: n
         allocate(this%arr(n))
-        print *, 'constructor was called'
+        ref_count = ref_count + 1
+        print *, 'constructor was called ', ref_count, ' object address: ', %LOC(this)
     end function myclass_new
 
     subroutine myclass_set(this, vals)
@@ -40,7 +45,8 @@ contains
         integer :: ier
         ! some compilers have already deallocated this%arr
         deallocate(this%arr, stat=ier)
-        print *, 'destructor was called'
+        ref_count = ref_count - 1
+        print *, 'destructor was called ', ref_count, ' object address: ', %LOC(this)
     end subroutine myclass_del
 
 end module myclass_mod
