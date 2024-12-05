@@ -28,7 +28,7 @@ contains
         integer, intent(in)                 :: n
         allocate(this%arr(n))
         ref_count = ref_count + 1
-        print *, 'constructor was called ', ref_count, ' object address: ', %LOC(this)
+        print *, 'constructor was called ', ref_count
     end function myclass_new
 
     subroutine myclass_set(this, vals)
@@ -46,7 +46,7 @@ contains
         ! some compilers have already deallocated this%arr
         deallocate(this%arr, stat=ier)
         ref_count = ref_count - 1
-        print *, 'destructor was called ', ref_count, ' object address: ', %LOC(this)
+        print *, 'destructor was called ', ref_count
     end subroutine myclass_del
 
 end module myclass_mod
