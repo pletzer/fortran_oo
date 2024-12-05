@@ -9,7 +9,9 @@ module myclass_mod
             ! methods
             procedure :: init => myclass_init
             procedure :: set => myclass_set    
-            procedure :: get => myclass_get    
+            procedure :: get => myclass_get
+            procedure :: getf => myclass_getf
+            procedure :: getf2 => myclass_getf2
             final :: myclass_del
     end type myclass_type
 
@@ -37,6 +39,25 @@ contains
         allocate(array, source=this%arr)
         print *, 'get method was called'
     end subroutine myclass_get
+
+    function myclass_getf(this) result(array)
+        class(myclass_type) :: this
+        integer, allocatable :: array(:)
+        ! allocate and copy
+        allocate(array, source=this%arr)
+        print *, 'getf method was called'
+    end function myclass_getf
+
+    function myclass_getf2(this) result(array)
+        class(myclass_type) :: this
+        integer, allocatable :: array(:)
+        integer :: ier
+        ! sliently deallocate array, even if it is already deallocated
+        deallocate(array, stat=ier)
+        ! this will automatically allocate array, and then copy
+        array = this%arr
+        print *, 'getf method was called'
+    end function myclass_getf2
 
     subroutine myclass_del(this)
         implicit none
@@ -67,6 +88,10 @@ subroutine test()
     call mc%set(vals)
 
     call mc%get(vals2)
+
+    ! function
+    vals2 = mc%getf()
+    vals2 = mc%getf2()
 
     ! mc will be destroyed when going out of scope
 end subroutine
