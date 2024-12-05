@@ -9,6 +9,7 @@ module myclass_mod
             ! methods
             procedure :: init => myclass_init
             procedure :: set => myclass_set    
+            procedure :: get => myclass_get    
             final :: myclass_del
     end type myclass_type
 
@@ -30,6 +31,13 @@ contains
         print *, 'set method was called'
     end subroutine myclass_set
 
+    subroutine myclass_get(this, array)
+        class(myclass_type) :: this
+        integer, allocatable :: array(:)
+        allocate(array, source=this%arr)
+        print *, 'get method was called'
+    end subroutine myclass_get
+
     subroutine myclass_del(this)
         implicit none
         type(myclass_type), intent(inout)  :: this
@@ -46,7 +54,7 @@ subroutine test()
     implicit none
     type(myclass_type)   :: mc
     integer              :: n
-    integer, allocatable :: vals(:)
+    integer, allocatable :: vals(:), vals2(:)
 
     n = 10
     allocate(vals(n))
@@ -57,6 +65,8 @@ subroutine test()
 
     ! call method
     call mc%set(vals)
+
+    call mc%get(vals2)
 
     ! mc will be destroyed when going out of scope
 end subroutine

@@ -12,6 +12,7 @@ enable_language(Fortran)
 
 enable_testing()
 
+add_subdirectory(class_vs_type)
 add_subdirectory(polymorphism2)
 add_subdirectory(class2)
 add_subdirectory(generic_type_bound)

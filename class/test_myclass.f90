@@ -24,11 +24,11 @@ contains
 
     function myclass_new(n) result(this)
         implicit none
-        type(myclass_type)                  :: this
-        integer, intent(in)                 :: n
+        type(myclass_type)    :: this
+        integer, intent(in)    :: n
         allocate(this%arr(n))
         ref_count = ref_count + 1
-        print *, 'constructor was called ', ref_count
+        print *, 'constructor was called ', ref_count, %LOC(this)
     end function myclass_new
 
     subroutine myclass_set(this, vals)
@@ -44,7 +44,8 @@ contains
         type(myclass_type), intent(inout)  :: this
         integer :: ier
         ! some compilers have already deallocated this%arr
-        deallocate(this%arr, stat=ier)
+        if (allocated(this%arr)) deallocate(this%arr)
+
         ref_count = ref_count - 1
         print *, 'destructor was called ', ref_count
     end subroutine myclass_del
@@ -64,6 +65,7 @@ subroutine test()
 
     ! call constructor
     mc = myclass_type(n)
+    print *, %LOC(mc)
 
     ! call method
     call mc%set(vals)
